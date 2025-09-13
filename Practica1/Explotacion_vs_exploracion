@@ -1,0 +1,70 @@
+# Librerías necesarias
+import networkx as nx
+import matplotlib.pyplot as plt
+import random
+
+# Crear un grafo de supermercados
+G = nx.DiGraph()
+
+# Nodos: lugares que puedes visitar
+places = ['Home', 'SuperMart', 'FreshMarket', 'DiscountStore', 'Goal']
+G.add_nodes_from(places)
+
+# Aristas: rutas posibles con "recompensas" (ej. satisfacción por precio y calidad)
+G.add_edge('Home', 'SuperMart', reward=3)
+G.add_edge('Home', 'FreshMarket', reward=4)
+G.add_edge('Home', 'DiscountStore', reward=2)
+G.add_edge('SuperMart', 'Goal', reward=5)
+G.add_edge('FreshMarket', 'Goal', reward=6)
+G.add_edge('DiscountStore', 'Goal', reward=4)
+
+# Visualizar el grafo
+pos = nx.spring_layout(G)
+edge_labels = nx.get_edge_attributes(G, 'reward')
+nx.draw(G, pos, with_labels=True, node_color='lightgreen', node_size=2000, font_size=10)
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+plt.title("Exploración vs Explotación: Elegir supermercado")
+plt.show()
+
+# Inicializar Q-table
+Q = {state: {neighbor: 0 for neighbor in G.successors(state)} for state in G.nodes()}
+
+# Parámetros
+epsilon = 0.3  # 30% del tiempo exploramos
+alpha = 0.5  # Tasa de aprendizaje
+gamma = 0.9  # Factor de descuento
+episodes = 500  # Número de episodios de entrenamiento
+
+# Función para elegir acción
+def choose_action(state):
+    if random.uniform(0, 1) < epsilon:
+        return random.choice(list(Q[state].keys()))  # Explora
+    else:
+        max_q = max(Q[state].values())
+        best_actions = [action for action, value in Q[state].items() if value == max_q]
+        return random.choice(best_actions)  # Explota
+
+# Entrenamiento
+for episode in range(episodes):
+    state = 'Home'  # Siempre empieza desde casa
+    while state != 'Goal':
+        action = choose_action(state)
+        reward = G[state][action]['reward']
+        next_state = action
+        old_q = Q[state][action]
+        max_future_q = max(Q[next_state].values(), default=0)
+        # Actualizar Q
+        Q[state][action] = old_q + alpha * (reward + gamma * max_future_q - old_q)
+        state = next_state
+
+# Mostrar resultados
+print("\nQ-Table aprendida:")
+for state in Q:
+    for action in Q[state]:
+        print(f"Desde {state} hacia {action}: {Q[state][action]:.2f}")
+
+print("\nPolítica final basada en explotación:")
+for state in Q:
+    if Q[state]:
+        best_action = max(Q[state], key=Q[state].get)
+        print(f"Desde {state} ir hacia {best_action}")

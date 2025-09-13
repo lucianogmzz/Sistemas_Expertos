@@ -1,0 +1,132 @@
+# -------------------------------
+# Inventario inicial en memoria
+# -------------------------------
+inventario = {
+    "nozzle": 10,
+    "rodillo": 5,
+    "sensor": 7,
+    "correa": 3
+}
+
+# -------------------------------
+# Base de conocimiento inicial enriquecida
+# -------------------------------
+knowledge_base = {
+    "hola": "Hola! Bienvenido al sistema de inventario SMT.",
+    "como estas": "¡Todo bien! Vamos a registrar tus retiros de refacciones.",
+    "de que te gustaria hablar": "Podemos hablar de inventario. Indícame qué refacción necesitas.",
+    
+    # Frases comunes sobre solicitar piezas
+    "necesito esta pieza": "¡Claro! Dime qué refacción necesitas y la cantidad.",
+    "dame esta pieza": "Perfecto, indícame cuál refacción y cuántas unidades.",
+    "podrias darme esta pieza": "Sí, por favor dime la refacción y la cantidad.",
+    "tienes esta pieza": "Verifiquemos el inventario. ¿Qué refacción necesitas?",
+    "quiero esta pieza": "Dime cuál refacción deseas y la cantidad.",
+    "solicito esta pieza": "Entendido. Indícame la refacción y cuántas unidades.",
+    "retirar pieza": "Perfecto. ¿Cuál refacción quieres retirar y en qué cantidad?",
+    "consultar inventario": "Aquí está el inventario actual:",
+    "mostrar inventario": "Te muestro el inventario:",
+    "hay stock de": "Verifiquemos el stock. ¿Qué refacción deseas consultar?"
+}
+
+# -------------------------------
+# Función para agregar conocimiento nuevo
+# -------------------------------
+def add_knowledge(question, response):
+    knowledge_base[question.lower()] = response
+    print("¡Nuevo conocimiento agregado!")
+
+# -------------------------------
+# Función para registrar retiro en memoria
+# -------------------------------
+def registrar_retiro(pieza, cantidad, quien):
+    cantidad = int(cantidad)
+    if pieza in inventario:
+        if inventario[pieza] >= cantidad:
+            inventario[pieza] -= cantidad
+            print(f"Registro completado: {quien} retiró {cantidad} de {pieza}.")
+        else:
+            print(f"No hay suficiente stock de {pieza}. Stock disponible: {inventario[pieza]}")
+    else:
+        print(f"La pieza {pieza} no existe en el inventario.")
+
+# -------------------------------
+# Función para mostrar inventario
+# -------------------------------
+def mostrar_inventario():
+    print("\nInventario actual:")
+    for pieza, cantidad in inventario.items():
+        print(f"- {pieza}: {cantidad} unidades")
+    print("\n")
+
+# -------------------------------
+# Chatbot principal
+# -------------------------------
+def chatbot():
+    print("Chatbot: Hola! Bienvenido al sistema de inventario SMT.")
+    mostrar_inventario()
+    
+    while True:
+        user_input = input("Tú: ").lower()
+
+        if user_input in ["salir", "exit", "quit"]:
+            print("Chatbot: ¡Hasta luego!")
+            break
+
+        # -------------------------------
+        # Responder según base de conocimiento
+        # -------------------------------
+        response = knowledge_base.get(user_input, None)
+        if response:
+            print(f"Chatbot: {response}")
+            if "inventario" in user_input:
+                mostrar_inventario()
+            continue
+
+        # -------------------------------
+        # Si no reconoce la pregunta/refacción
+        # -------------------------------
+        print("Chatbot: No reconozco eso. ¿Quieres agregarlo al sistema? (sí/no)")
+        agregar = input("Tú: ").lower()
+        if agregar in ["sí", "si", "s"]:
+            # Preguntar cuántas unidades si es refacción
+            while True:
+                cantidad = input(f"Chatbot: ¿Cuántas unidades de '{user_input}' deseas agregar? ")
+                if cantidad.isdigit():
+                    inventario[user_input] = int(cantidad)
+                    print(f"Chatbot: Refacción '{user_input}' agregada con {cantidad} unidades.")
+                    break
+                else:
+                    print("Chatbot: Ingresa un número válido.")
+
+            # Agregar también a la base de conocimiento
+            resp_nueva = input("Chatbot: ¿Qué debería responder cuando alguien pregunte esto de nuevo? ")
+            add_knowledge(user_input, resp_nueva)
+        else:
+            print("Chatbot: Entendido, no se agregará al sistema.")
+
+        mostrar_inventario()
+
+        # -------------------------------
+        # Flujo de retiro de inventario
+        # -------------------------------
+        pieza = input("Chatbot: ¿Qué refacción deseas retirar? ").lower()
+        if pieza not in inventario:
+            print(f"Chatbot: Lo siento, {pieza} no está en el inventario.")
+            continue
+
+        cantidad = input(f"Chatbot: ¿Cuántas unidades de {pieza}? ")
+        if not cantidad.isdigit():
+            print("Chatbot: Ingresa un número válido.")
+            continue
+
+        quien = input("Chatbot: ¿Quién la retira? ")
+
+        registrar_retiro(pieza, cantidad, quien)
+        mostrar_inventario()
+
+# -------------------------------
+# Ejecutar chatbot
+# -------------------------------
+if __name__ == "__main__":
+    chatbot()
