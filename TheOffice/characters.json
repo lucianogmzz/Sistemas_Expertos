@@ -1,0 +1,102 @@
+[
+  {
+    "nombre": "Michael Scott",
+    "rol": "jefe",
+    "genero": "hombre",
+    "aspecto": ["alto", "cabello castaño oscuro", "ocasionalmente calvo"],
+    "personalidad": ["autoritario", "infantil", "dramático"],
+    "narrativa": "principal",
+    "estilo": ["trajes de oficina formales", "corbata ancha"],
+    "distintivo": ["frases exageradas", "muy teatral"]
+  },
+  {
+    "nombre": "Jim Halpert",
+    "rol": "ventas",
+    "genero": "hombre",
+    "aspecto": ["alto", "delgado", "cabello castaño", "expresivo"],
+    "personalidad": ["sarcástico", "bromista", "romántico"],
+    "narrativa": "principal",
+    "estilo": ["ropa casual de oficina", "camisas sencillas"],
+    "distintivo": ["sonríe a la cámara"]
+  },
+  {
+    "nombre": "Dwight Schrute",
+    "rol": "ventas",
+    "genero": "hombre",
+    "aspecto": ["delgado", "cabello castaño", "peinado hacia arriba", "lentes de protección ocasionales"],
+    "personalidad": ["disciplinado", "excéntrico", "obsesivo"],
+    "narrativa": "principal",
+    "estilo": ["camisa amarilla", "corbata fina", "chaleco ocasional"],
+    "distintivo": ["fanático de la agricultura", "obsesivo con reglas"]
+  },
+  {
+    "nombre": "Pam Beesly",
+    "rol": "recepcionista",
+    "genero": "mujer",
+    "aspecto": ["cabello castaño rojizo", "estatura media", "cara expresiva"],
+    "personalidad": ["amable", "creativa", "tímida"],
+    "narrativa": "principal",
+    "estilo": ["ropa sencilla y profesional", "colores pastel"],
+    "distintivo": ["le gusta dibujar y pintar"]
+  },
+  {
+    "nombre": "Angela Martin",
+    "rol": "contabilidad",
+    "genero": "mujer",
+    "aspecto": ["rubia", "cabello recogido", "baja estatura"],
+    "personalidad": ["estricta", "perfeccionista", "religiosa"],
+    "narrativa": "secundaria",
+    "estilo": ["ropa formal conservadora"],
+    "distintivo": ["ama los gatos", "sigue reglas estrictas"]
+  },
+  {
+    "nombre": "Kevin Malone",
+    "rol": "contabilidad",
+    "genero": "hombre",
+    "aspecto": ["robusto", "calvo parcial", "bajo"],
+    "personalidad": ["despreocupado", "torpe", "amante de la comida"],
+    "narrativa": "secundaria",
+    "estilo": ["ropa cómoda"],
+    "distintivo": ["le encanta comer", "cuenta chistes malos"]
+  },
+  {
+    "nombre": "Creed Bratton",
+    "rol": "varios",
+    "genero": "hombre",
+    "aspecto": ["delgado", "cabello canoso", "aspecto desaliñado"],
+    "personalidad": ["excéntrico", "misterioso", "impredecible"],
+    "narrativa": "secundaria",
+    "estilo": ["ropa casual desordenada"],
+    "distintivo": ["historia de vida misteriosa"]
+  },
+  {
+    "nombre": "Stanley Hudson",
+    "rol": "ventas",
+    "genero": "hombre",
+    "aspecto": ["robusto", "calvo", "cejas prominentes"],
+    "personalidad": ["serio", "perezoso", "cínico"],
+    "narrativa": "secundaria",
+    "estilo": ["trajes formales elegantes"],
+    "distintivo": ["distraído", "siempre esperando el fin del día"]
+  },
+  {
+    "nombre": "Kelly Kapoor",
+    "rol": "servicios",
+    "genero": "mujer",
+    "aspecto": ["cabello oscuro", "baja estatura"],
+    "personalidad": ["habladora", "dramática", "coqueta"],
+    "narrativa": "secundaria",
+    "estilo": ["ropa colorida y llamativa"],
+    "distintivo": ["obsesionada con la moda", "le gustan los chismes"]
+  },
+  {
+    "nombre": "Toby Flenderson",
+    "rol": "recursos humanos",
+    "genero": "hombre",
+    "aspecto": ["alto", "delgado", "gafas"],
+    "personalidad": ["tímido", "melancólico", "sensible"],
+    "narrativa": "secundaria",
+    "estilo": ["trajes sencillos", "colores neutros"],
+    "distintivo": ["poco carismático", "siempre ignorado por Michael"]
+  }
+]
