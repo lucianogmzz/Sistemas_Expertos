@@ -1,118 +1,169 @@
 import json
+import random
 import os
 
-CHARACTER_FILE = "characters.json"
+# ==============================
+# CONFIGURACIÓN BÁSICA
+# ==============================
 MIN_QUESTIONS = 5
+JSON_FILE = "characters.json"
+
 CATEGORY_ORDER = ["rol", "genero", "aspecto", "personalidad", "narrativa", "estilo", "distintivo"]
 
-QUESTION_TEMPLATES = {
-    "rol": "¿Trabaja en {value}?",
-    "genero": "¿Es {value}?",
-    "aspecto": "¿Tiene {value}?",
-    "personalidad": "¿Es {value}?",
-    "narrativa": "¿Es uno de los personajes {value}?",
-    "estilo": "¿Suele usar {value}?",
-    "distintivo": "¿Presenta {value}?"
-}
 
-def load_characters(path=CHARACTER_FILE):
-    if not os.path.exists(path):
-        print("⚠️ No se encontró el archivo characters.json.")
+# ==============================
+# FUNCIONES DE CARGA / GUARDADO
+# ==============================
+def load_knowledge(filename=JSON_FILE):
+    if not os.path.exists(filename):
+        print("⚠️ No se encontró la base de datos. Se creará una nueva.")
         return []
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    with open(filename, "r", encoding="utf-8") as f:
+        try:
+            data = json.load(f)
+            return data
+        except json.JSONDecodeError:
+            print("⚠️ Error al leer el archivo JSON. Se iniciará una base vacía.")
+            return []
 
-def ask_yes_no(prompt):
-    while True:
-        a = input(prompt + " (s/n): ").strip().lower()
-        if a in ("s", "si", "sí"):
-            return True
-        if a in ("n", "no"):
-            return False
-        print("Por favor, responde con 's' o 'n'.")
 
-def format_question(attribute, value):
-    template = QUESTION_TEMPLATES.get(attribute, "¿{value}?")
-    return template.format(value=value)
+def save_knowledge(data, filename=JSON_FILE):
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
-def ask_question(attribute, remaining_chars, asked_features):
-    """
-    Escoge un rasgo no preguntado de la categoría y genera pregunta natural.
-    Filtra candidatos según la respuesta.
-    """
-    counts = {}
+
+# ==============================
+# MOTOR DE PREGUNTAS
+# ==============================
+def ask_question(category, remaining_chars, asked_features):
+    """Genera una pregunta basada en una categoría."""
+    opciones = []
     for char in remaining_chars:
-        values = char.get(attribute, [])
-        if isinstance(values, str):
-            values = [values]
-        for v in values:
-            if v not in asked_features:
-                counts[v] = counts.get(v, 0) + 1
+        value = char.get(category)
+        if isinstance(value, list):
+            for v in value:
+                if v not in asked_features:
+                    opciones.append(v)
+        elif isinstance(value, str):
+            if value not in asked_features:
+                opciones.append(value)
 
-    if not counts:
+    if not opciones:
         return remaining_chars, asked_features
 
-    # Elegir rasgo más común
-    value = max(counts.items(), key=lambda x: x[1])[0]
-    question = format_question(attribute, value)
-    answer = ask_yes_no(question)
-    asked_features.add(value)
+    feature = random.choice(opciones)
+    pregunta = f"¿El {category} es '{feature}'? (s/n): "
+    ans = input(pregunta).strip().lower()
 
     # Filtrar candidatos
-    new_remaining = []
-    for char in remaining_chars:
-        vals = char.get(attribute, [])
-        if isinstance(vals, str):
-            vals = [vals]
-        if (answer and value in vals) or (not answer and value not in vals):
-            new_remaining.append(char)
-
-    return new_remaining, asked_features
-
-def guess_character():
-    characters = load_characters()
-    if not characters:
-        print("No hay personajes disponibles.")
-        return
-
-    remaining_chars = characters.copy()
-    asked_count = 0
-    asked_features = set()
-    category_index = 0
-
-    print("\n🧠 Piensa en un personaje de The Office y responde con 's' o 'n'.")
-
-    # Preguntas por categorías en orden, mínimo 5
-    while asked_count < MIN_QUESTIONS and remaining_chars:
-        category = CATEGORY_ORDER[category_index % len(CATEGORY_ORDER)]
-        remaining_chars, asked_features = ask_question(category, remaining_chars, asked_features)
-        asked_count += 1
-        category_index += 1
-
-    # Continuar preguntando por descarte si quedan varios candidatos
-    while len(remaining_chars) > 1:
-        # Elegir el primer candidato y preguntar directamente
-        candidate = remaining_chars[0]
-        answer = ask_yes_no(f"¿El personaje es {candidate['nombre']}?")
-        if answer:
-            print(f"\n🎉 ¡El personaje es {candidate['nombre']}!")
-            return
-        else:
-            remaining_chars.pop(0)
-
-    # Si queda un solo candidato
-    if remaining_chars:
-        print(f"\n🎉 ¡El personaje es {remaining_chars[0]['nombre']}!")
+    if ans == "s":
+        remaining_chars = [
+            c for c in remaining_chars
+            if (feature in c.get(category, [])) or (feature == c.get(category))
+        ]
     else:
-        print("\n🤔 No pude adivinar el personaje. 😅")
+        remaining_chars = [
+            c for c in remaining_chars
+            if not ((feature in c.get(category, [])) or (feature == c.get(category)))
+        ]
 
+    asked_features.add(feature)
+    return remaining_chars, asked_features
+
+
+# ==============================
+# FUNCIÓN DE APRENDIZAJE
+# ==============================
+def learn_new_character(characters):
+    print("\n🤔 Parece que no acerté. ¡Enséñame un nuevo personaje!")
+    nombre = input("¿En quién estabas pensando? ").strip()
+
+    # Evitar duplicados
+    if any(c['nombre'].lower() == nombre.lower() for c in characters):
+        print("Ya conozco a ese personaje. Intentaré mejorar mis preguntas la próxima vez.")
+        return characters
+
+    nuevo = {
+        "nombre": nombre,
+        "rol": input("¿Qué rol tiene en la oficina?: ").strip(),
+        "genero": input("¿Es hombre o mujer?: ").strip(),
+        "aspecto": input("Menciona algunos rasgos físicos (separa con comas): ").split(","),
+        "personalidad": input("Describe su personalidad (separa con comas): ").split(","),
+        "narrativa": input("¿Es personaje principal o secundario?: ").strip(),
+        "estilo": input("¿Cómo suele vestir?: ").split(","),
+        "distintivo": input("¿Algún rasgo distintivo o hábito?: ").split(",")
+    }
+
+    # Limpieza de listas
+    for key in ["aspecto", "personalidad", "estilo", "distintivo"]:
+        nuevo[key] = [x.strip() for x in nuevo[key] if x.strip()]
+
+    characters.append(nuevo)
+    save_knowledge(characters)
+    print(f"✅ ¡He aprendido sobre {nombre}! La próxima vez intentaré adivinarlo mejor.")
+    return characters
+
+
+# ==============================
+# MOTOR PRINCIPAL
+# ==============================
 def main():
-    print("=== 🧩 Akinator: The Office (Motor por descarte con características múltiples) ===")
-    while True:
-        guess_character()
-        if not ask_yes_no("\n¿Quieres jugar otra vez?"):
-            break
-    print("\n✅ Gracias por jugar.")
+    print("🧠 Bienvenido al juego de The Office (modo experto)\n")
 
+    while True:
+        characters = load_knowledge()
+        if not characters:
+            print("No hay datos cargados. Agrega personajes antes de jugar.")
+            return
+
+        remaining_chars = characters.copy()
+        asked_features = set()
+        asked_count = 0
+        category_index = 0
+
+        # 🔸 Mínimo 5 preguntas, pero sigue si hay más de 1 candidato
+        while (asked_count < MIN_QUESTIONS or len(remaining_chars) > 1) and remaining_chars:
+            category = CATEGORY_ORDER[category_index % len(CATEGORY_ORDER)]
+            remaining_chars, asked_features = ask_question(category, remaining_chars, asked_features)
+            asked_count += 1
+            category_index += 1
+
+            # Si ya no hay personajes posibles
+            if not remaining_chars:
+                break
+
+        # 🔸 Intentar adivinar
+        if not remaining_chars:
+            print("\nNo estoy seguro de quién podría ser 😔.")
+            resp = input("¿Quieres enseñarme quién era? (s/n): ").lower()
+            if resp == "s":
+                characters = learn_new_character(characters)
+        elif len(remaining_chars) == 1:
+            personaje = remaining_chars[0]["nombre"]
+            print(f"\nCreo que estás pensando en... 🕵️‍♂️ {personaje}")
+            correcto = input("¿Adiviné correctamente? (s/n): ").lower()
+            if correcto != "s":
+                characters = learn_new_character(characters)
+            else:
+                print("😎 ¡Sabía que lo adivinaría!")
+        else:
+            print("\nTengo varias opciones en mente:")
+            for c in remaining_chars:
+                print(f" - {c['nombre']}")
+            correcto = input("\n¿Está tu personaje en la lista? (s/n): ").lower()
+            if correcto != "s":
+                characters = learn_new_character(characters)
+
+        # 🔁 Preguntar si desea jugar de nuevo
+        again = input("\n¿Quieres jugar otra vez? (s/n): ").strip().lower()
+        if again != "s":
+            print("\n👋 ¡Gracias por jugar! ¡Vuelve pronto a Dunder Mifflin!")
+            break
+        else:
+            print("\n🔄 Reiniciando el juego...\n")
+
+# ==============================
+# EJECUCIÓN
+# ==============================
 if __name__ == "__main__":
     main()

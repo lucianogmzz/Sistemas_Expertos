@@ -3,100 +3,616 @@
     "nombre": "Michael Scott",
     "rol": "jefe",
     "genero": "hombre",
-    "aspecto": ["alto", "cabello castaño oscuro", "ocasionalmente calvo"],
-    "personalidad": ["autoritario", "infantil", "dramático"],
+    "aspecto": [
+      "alto",
+      "cabello castaño oscuro",
+      "edad media"
+    ],
+    "personalidad": [
+      "autoritario",
+      "infantil",
+      "dramático",
+      "entusiasta"
+    ],
     "narrativa": "principal",
-    "estilo": ["trajes de oficina formales", "corbata ancha"],
-    "distintivo": ["frases exageradas", "muy teatral"]
+    "estilo": [
+      "trajes formales",
+      "corbata llamativa"
+    ],
+    "distintivo": [
+      "frases exageradas",
+      "muy teatral",
+      "quiere ser querido"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Jim Halpert",
     "rol": "ventas",
     "genero": "hombre",
-    "aspecto": ["alto", "delgado", "cabello castaño", "expresivo"],
-    "personalidad": ["sarcástico", "bromista", "romántico"],
+    "aspecto": [
+      "alto",
+      "delgado",
+      "cabello castaño",
+      "expresivo"
+    ],
+    "personalidad": [
+      "sarcástico",
+      "bromista",
+      "romántico",
+      "carismático"
+    ],
     "narrativa": "principal",
-    "estilo": ["ropa casual de oficina", "camisas sencillas"],
-    "distintivo": ["sonríe a la cámara"]
+    "estilo": [
+      "ropa casual de oficina",
+      "camisas sencillas"
+    ],
+    "distintivo": [
+      "sonríe a la cámara",
+      "se burla de Dwight"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Dwight Schrute",
     "rol": "ventas",
     "genero": "hombre",
-    "aspecto": ["delgado", "cabello castaño", "peinado hacia arriba", "lentes de protección ocasionales"],
-    "personalidad": ["disciplinado", "excéntrico", "obsesivo"],
+    "aspecto": [
+      "delgado",
+      "cabello castaño",
+      "peinado hacia arriba",
+      "usa gafas"
+    ],
+    "personalidad": [
+      "disciplinado",
+      "excéntrico",
+      "obsesivo",
+      "competitivo"
+    ],
     "narrativa": "principal",
-    "estilo": ["camisa amarilla", "corbata fina", "chaleco ocasional"],
-    "distintivo": ["fanático de la agricultura", "obsesivo con reglas"]
+    "estilo": [
+      "camisa amarilla",
+      "corbata fina",
+      "chaleco ocasional"
+    ],
+    "distintivo": [
+      "fanático de la agricultura",
+      "obsesivo con reglas"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Pam Beesly",
     "rol": "recepcionista",
     "genero": "mujer",
-    "aspecto": ["cabello castaño rojizo", "estatura media", "cara expresiva"],
-    "personalidad": ["amable", "creativa", "tímida"],
+    "aspecto": [
+      "cabello castaño rojizo",
+      "estatura media",
+      "cara expresiva"
+    ],
+    "personalidad": [
+      "amable",
+      "creativa",
+      "tímida",
+      "soñadora"
+    ],
     "narrativa": "principal",
-    "estilo": ["ropa sencilla y profesional", "colores pastel"],
-    "distintivo": ["le gusta dibujar y pintar"]
+    "estilo": [
+      "ropa sencilla y profesional",
+      "colores pastel"
+    ],
+    "distintivo": [
+      "le gusta dibujar y pintar",
+      "se casa con Jim"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Angela Martin",
     "rol": "contabilidad",
     "genero": "mujer",
-    "aspecto": ["rubia", "cabello recogido", "baja estatura"],
-    "personalidad": ["estricta", "perfeccionista", "religiosa"],
+    "aspecto": [
+      "rubia",
+      "cabello recogido",
+      "baja estatura"
+    ],
+    "personalidad": [
+      "estricta",
+      "perfeccionista",
+      "religiosa",
+      "seria"
+    ],
     "narrativa": "secundaria",
-    "estilo": ["ropa formal conservadora"],
-    "distintivo": ["ama los gatos", "sigue reglas estrictas"]
+    "estilo": [
+      "ropa formal conservadora"
+    ],
+    "distintivo": [
+      "ama los gatos",
+      "mantiene un romance con Dwight"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Kevin Malone",
     "rol": "contabilidad",
     "genero": "hombre",
-    "aspecto": ["robusto", "calvo parcial", "bajo"],
-    "personalidad": ["despreocupado", "torpe", "amante de la comida"],
+    "aspecto": [
+      "robusto",
+      "calvo parcial",
+      "bajo"
+    ],
+    "personalidad": [
+      "despreocupado",
+      "torpe",
+      "amante de la comida",
+      "simpático"
+    ],
     "narrativa": "secundaria",
-    "estilo": ["ropa cómoda"],
-    "distintivo": ["le encanta comer", "cuenta chistes malos"]
+    "estilo": [
+      "ropa cómoda"
+    ],
+    "distintivo": [
+      "le encanta comer",
+      "cuenta chistes malos"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
-    "nombre": "Creed Bratton",
-    "rol": "varios",
+    "nombre": "Oscar Martínez",
+    "rol": "contabilidad",
     "genero": "hombre",
-    "aspecto": ["delgado", "cabello canoso", "aspecto desaliñado"],
-    "personalidad": ["excéntrico", "misterioso", "impredecible"],
+    "aspecto": [
+      "moreno",
+      "usa gafas",
+      "contextura media"
+    ],
+    "personalidad": [
+      "analítico",
+      "crítico",
+      "racional"
+    ],
     "narrativa": "secundaria",
-    "estilo": ["ropa casual desordenada"],
-    "distintivo": ["historia de vida misteriosa"]
+    "estilo": [
+      "camisas formales",
+      "pantalones elegantes"
+    ],
+    "distintivo": [
+      "siempre corrige a otros",
+      "tiene opiniones firmes"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
+  },
+  {
+    "nombre": "Phyllis Vance",
+    "rol": "ventas",
+    "genero": "mujer",
+    "aspecto": [
+      "cabello rizado",
+      "contextura robusta"
+    ],
+    "personalidad": [
+      "dulce",
+      "sarcástica",
+      "madura"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa color pastel",
+      "accesorios llamativos"
+    ],
+    "distintivo": [
+      "casada con Bob Vance",
+      "voz suave"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Stanley Hudson",
     "rol": "ventas",
     "genero": "hombre",
-    "aspecto": ["robusto", "calvo", "cejas prominentes"],
-    "personalidad": ["serio", "perezoso", "cínico"],
+    "aspecto": [
+      "robusto",
+      "calvo",
+      "cejas prominentes"
+    ],
+    "personalidad": [
+      "serio",
+      "perezoso",
+      "cínico"
+    ],
     "narrativa": "secundaria",
-    "estilo": ["trajes formales elegantes"],
-    "distintivo": ["distraído", "siempre esperando el fin del día"]
+    "estilo": [
+      "trajes formales elegantes"
+    ],
+    "distintivo": [
+      "siempre esperando el fin del día",
+      "ama los cruceros"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Kelly Kapoor",
     "rol": "servicios",
     "genero": "mujer",
-    "aspecto": ["cabello oscuro", "baja estatura"],
-    "personalidad": ["habladora", "dramática", "coqueta"],
+    "aspecto": [
+      "cabello oscuro",
+      "baja estatura"
+    ],
+    "personalidad": [
+      "habladora",
+      "dramática",
+      "coqueta",
+      "impulsiva"
+    ],
     "narrativa": "secundaria",
-    "estilo": ["ropa colorida y llamativa"],
-    "distintivo": ["obsesionada con la moda", "le gustan los chismes"]
+    "estilo": [
+      "ropa colorida y llamativa"
+    ],
+    "distintivo": [
+      "obsesionada con la moda",
+      "le gustan los chismes"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
+  },
+  {
+    "nombre": "Creed Bratton",
+    "rol": "calidad",
+    "genero": "hombre",
+    "aspecto": [
+      "delgado",
+      "cabello canoso",
+      "aspecto desaliñado"
+    ],
+    "personalidad": [
+      "excéntrico",
+      "misterioso",
+      "impredecible"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa casual desordenada"
+    ],
+    "distintivo": [
+      "historia de vida misteriosa",
+      "actúa confuso"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
   },
   {
     "nombre": "Toby Flenderson",
     "rol": "recursos humanos",
     "genero": "hombre",
-    "aspecto": ["alto", "delgado", "gafas"],
-    "personalidad": ["tímido", "melancólico", "sensible"],
+    "aspecto": [
+      "alto",
+      "delgado",
+      "gafas"
+    ],
+    "personalidad": [
+      "tímido",
+      "melancólico",
+      "sensible"
+    ],
     "narrativa": "secundaria",
-    "estilo": ["trajes sencillos", "colores neutros"],
-    "distintivo": ["poco carismático", "siempre ignorado por Michael"]
+    "estilo": [
+      "trajes sencillos",
+      "colores neutros"
+    ],
+    "distintivo": [
+      "poco carismático",
+      "siempre ignorado por Michael"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "miembro original del equipo"
+    ],
+    "temporada": "inicio"
+  },
+  {
+    "nombre": "Andy Bernard",
+    "rol": "ventas",
+    "genero": "hombre",
+    "aspecto": [
+      "cabello claro",
+      "contextura media"
+    ],
+    "personalidad": [
+      "inseguro",
+      "entusiasta",
+      "vanidoso"
+    ],
+    "narrativa": "principal",
+    "estilo": [
+      "ropa preppy",
+      "chalecos coloridos"
+    ],
+    "distintivo": [
+      "le gusta cantar a capella",
+      "quiere ser querido"
+    ],
+    "contexto": [
+      "llegó tras fusión con Stamford"
+    ],
+    "temporada": "media"
+  },
+  {
+    "nombre": "Erin Hannon",
+    "rol": "recepcionista",
+    "genero": "mujer",
+    "aspecto": [
+      "cabello rubio",
+      "joven",
+      "sonriente"
+    ],
+    "personalidad": [
+      "optimista",
+      "ingenua",
+      "alegre"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa sencilla",
+      "vestidos color pastel"
+    ],
+    "distintivo": [
+      "muy inocente",
+      "risa contagiosa"
+    ],
+    "contexto": [
+      "llegó tras salida de Pam"
+    ],
+    "temporada": "media"
+  },
+  {
+    "nombre": "Oscar Martínez",
+    "rol": "contabilidad",
+    "genero": "hombre",
+    "aspecto": [
+      "moreno",
+      "usa gafas",
+      "contextura media"
+    ],
+    "personalidad": [
+      "analítico",
+      "racional",
+      "inteligente"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa formal",
+      "camisas elegantes"
+    ],
+    "distintivo": [
+      "corrige a sus compañeros"
+    ],
+    "contexto": [
+      "trabaja en Scranton"
+    ],
+    "temporada": "inicio"
+  },
+  {
+    "nombre": "Darryl Philbin",
+    "rol": "almacén",
+    "genero": "hombre",
+    "aspecto": [
+      "moreno",
+      "corpulento"
+    ],
+    "personalidad": [
+      "tranquilo",
+      "astuto",
+      "práctico"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa casual de trabajo"
+    ],
+    "distintivo": [
+      "trabaja en el almacén",
+      "amigo de Jim"
+    ],
+    "contexto": [
+      "trabaja en Scranton",
+      "promovido al corporativo"
+    ],
+    "temporada": "media"
+  },
+  {
+    "nombre": "Jan Levinson",
+    "rol": "corporativo",
+    "genero": "mujer",
+    "aspecto": [
+      "alta",
+      "cabello oscuro",
+      "profesional"
+    ],
+    "personalidad": [
+      "ambiciosa",
+      "controladora",
+      "intensa"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa ejecutiva",
+      "trajes elegantes"
+    ],
+    "distintivo": [
+      "tuvo relación con Michael",
+      "ejecutiva de Dunder Mifflin"
+    ],
+    "contexto": [
+      "trabaja en corporativo"
+    ],
+    "temporada": "inicio"
+  },
+  {
+    "nombre": "Holly Flax",
+    "rol": "recursos humanos",
+    "genero": "mujer",
+    "aspecto": [
+      "rubia",
+      "contextura media"
+    ],
+    "personalidad": [
+      "divertida",
+      "dulce",
+      "comprensiva"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa formal ligera"
+    ],
+    "distintivo": [
+      "pareja de Michael",
+      "sentido del humor similar"
+    ],
+    "contexto": [
+      "trabaja en corporativo y Scranton"
+    ],
+    "temporada": "media"
+  },
+  {
+    "nombre": "Gabe Lewis",
+    "rol": "corporativo",
+    "genero": "hombre",
+    "aspecto": [
+      "alto",
+      "delgado",
+      "cabello castaño"
+    ],
+    "personalidad": [
+      "tímido",
+      "incómodo",
+      "raro"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa formal sobria"
+    ],
+    "distintivo": [
+      "incómodo en interacciones sociales"
+    ],
+    "contexto": [
+      "llegó tras la compra de Sabre"
+    ],
+    "temporada": "final"
+  },
+  {
+    "nombre": "Nellie Bertram",
+    "rol": "corporativo",
+    "genero": "mujer",
+    "aspecto": [
+      "pelirroja",
+      "elegante"
+    ],
+    "personalidad": [
+      "manipuladora",
+      "excéntrica",
+      "ambiciosa"
+    ],
+    "narrativa": "secundaria",
+    "estilo": [
+      "ropa llamativa y profesional"
+    ],
+    "distintivo": [
+      "intenta quedarse con el puesto de Andy"
+    ],
+    "contexto": [
+      "llegó tras la compra de Sabre"
+    ],
+    "temporada": "final"
+  },
+  {
+    "nombre": "Ryan Howard",
+    "rol": "Temporal",
+    "genero": "hombre",
+    "aspecto": [
+      "joven",
+      "cabello oscuro",
+      "delgado"
+    ],
+    "personalidad": [
+      "egoista",
+      "arrogante",
+      "ambicioso"
+    ],
+    "narrativa": "secundario",
+    "estilo": [
+      "camisa",
+      "corbata",
+      "sin saco"
+    ],
+    "distintivo": [
+      "novio de kelly",
+      "guapo"
+    ]
+  },
+  {
+    "nombre": "Meredith Palmer",
+    "rol": "proveedores",
+    "genero": "mujer",
+    "aspecto": [
+      "cabello rojo",
+      "cabello lacio",
+      "edad media"
+    ],
+    "personalidad": [
+      "rara",
+      "despreocupada",
+      "bizarra",
+      "alcoholica"
+    ],
+    "narrativa": "secundario",
+    "estilo": [
+      "falda",
+      "vestido",
+      "sueter"
+    ],
+    "distintivo": [
+      "toma alcohol"
+    ]
   }
 ]
