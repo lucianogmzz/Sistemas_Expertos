@@ -407,33 +407,6 @@
     "temporada": "media"
   },
   {
-    "nombre": "Oscar Martínez",
-    "rol": "contabilidad",
-    "genero": "hombre",
-    "aspecto": [
-      "moreno",
-      "usa gafas",
-      "contextura media"
-    ],
-    "personalidad": [
-      "analítico",
-      "racional",
-      "inteligente"
-    ],
-    "narrativa": "secundaria",
-    "estilo": [
-      "ropa formal",
-      "camisas elegantes"
-    ],
-    "distintivo": [
-      "corrige a sus compañeros"
-    ],
-    "contexto": [
-      "trabaja en Scranton"
-    ],
-    "temporada": "inicio"
-  },
-  {
     "nombre": "Darryl Philbin",
     "rol": "almacén",
     "genero": "hombre",
@@ -534,31 +507,6 @@
     ],
     "distintivo": [
       "incómodo en interacciones sociales"
-    ],
-    "contexto": [
-      "llegó tras la compra de Sabre"
-    ],
-    "temporada": "final"
-  },
-  {
-    "nombre": "Nellie Bertram",
-    "rol": "corporativo",
-    "genero": "mujer",
-    "aspecto": [
-      "pelirroja",
-      "elegante"
-    ],
-    "personalidad": [
-      "manipuladora",
-      "excéntrica",
-      "ambiciosa"
-    ],
-    "narrativa": "secundaria",
-    "estilo": [
-      "ropa llamativa y profesional"
-    ],
-    "distintivo": [
-      "intenta quedarse con el puesto de Andy"
     ],
     "contexto": [
       "llegó tras la compra de Sabre"

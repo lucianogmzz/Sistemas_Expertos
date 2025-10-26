@@ -1,15 +1,15 @@
 import json
 import random
 import os
+import tkinter as tk
+from PIL import Image, ImageTk  # pip install pillow
 
 # ==============================
 # CONFIGURACIÓN BÁSICA
 # ==============================
 MIN_QUESTIONS = 5
 JSON_FILE = "characters.json"
-
 CATEGORY_ORDER = ["rol", "genero", "aspecto", "personalidad", "narrativa", "estilo", "distintivo"]
-
 
 # ==============================
 # FUNCIONES DE CARGA / GUARDADO
@@ -26,144 +26,237 @@ def load_knowledge(filename=JSON_FILE):
             print("⚠️ Error al leer el archivo JSON. Se iniciará una base vacía.")
             return []
 
-
 def save_knowledge(data, filename=JSON_FILE):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-
 # ==============================
-# MOTOR DE PREGUNTAS
+# INTERFAZ GRÁFICA
 # ==============================
-def ask_question(category, remaining_chars, asked_features):
-    """Genera una pregunta basada en una categoría."""
-    opciones = []
-    for char in remaining_chars:
-        value = char.get(category)
-        if isinstance(value, list):
-            for v in value:
-                if v not in asked_features:
-                    opciones.append(v)
-        elif isinstance(value, str):
-            if value not in asked_features:
-                opciones.append(value)
+class TheOfficeUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Akinator The Office")
+        self.root.geometry("900x650")
+        self.root.configure(bg="#1c3d5a")
 
-    if not opciones:
-        return remaining_chars, asked_features
+        self.ui_mode = "asking"
 
-    feature = random.choice(opciones)
-    pregunta = f"¿El {category} es '{feature}'? (s/n): "
-    ans = input(pregunta).strip().lower()
+        # --- CONTENEDOR CENTRAL ---
+        self.main_frame = tk.Frame(root, bg="#1c3d5a")
+        self.main_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-    # Filtrar candidatos
-    if ans == "s":
-        remaining_chars = [
-            c for c in remaining_chars
-            if (feature in c.get(category, [])) or (feature == c.get(category))
-        ]
-    else:
-        remaining_chars = [
-            c for c in remaining_chars
-            if not ((feature in c.get(category, [])) or (feature == c.get(category)))
-        ]
+        # --- TÍTULO ---
+        self.title_label = tk.Label(
+            self.main_frame,
+            text="Akinator The Office",
+            font=("Impact", 36, "bold"),
+            fg="white",
+            bg="#1c3d5a"
+        )
+        self.title_label.pack(pady=(0, 20))
 
-    asked_features.add(feature)
-    return remaining_chars, asked_features
+        # --- LOGO OPCIONAL ---
+        if os.path.exists("logo.png"):
+            logo_img = Image.open("logo.png").resize((200, 80))
+            self.logo = ImageTk.PhotoImage(logo_img)
+            tk.Label(self.main_frame, image=self.logo, bg="#1c3d5a").pack(pady=(0, 20))
 
+        # --- PREGUNTA ---
+        self.question_label = tk.Label(
+            self.main_frame,
+            text="Bienvenido a Dunder Mifflin 🎬",
+            font=("Arial", 18, "bold"),
+            fg="white",
+            bg="#1c3d5a",
+            wraplength=700,
+            justify="center"
+        )
+        self.question_label.pack(pady=20)
 
-# ==============================
-# FUNCIÓN DE APRENDIZAJE
-# ==============================
-def learn_new_character(characters):
-    print("\n🤔 Parece que no acerté. ¡Enséñame un nuevo personaje!")
-    nombre = input("¿En quién estabas pensando? ").strip()
+        # --- BOTONES SÍ / NO ---
+        self.button_frame = tk.Frame(self.main_frame, bg="#1c3d5a")
+        self.button_frame.pack(pady=10)
 
-    # Evitar duplicados
-    if any(c['nombre'].lower() == nombre.lower() for c in characters):
-        print("Ya conozco a ese personaje. Intentaré mejorar mis preguntas la próxima vez.")
-        return characters
+        self.yes_btn = tk.Button(
+            self.button_frame,
+            text="Sí",
+            width=14,
+            bg="#2e8b57",
+            fg="white",
+            font=("Arial", 14, "bold"),
+            command=lambda: self.answer("s")
+        )
+        self.no_btn = tk.Button(
+            self.button_frame,
+            text="No",
+            width=14,
+            bg="#b22222",
+            fg="white",
+            font=("Arial", 14, "bold"),
+            command=lambda: self.answer("n")
+        )
+        self.yes_btn.grid(row=0, column=0, padx=40)
+        self.no_btn.grid(row=0, column=1, padx=40)
 
-    nuevo = {
-        "nombre": nombre,
-        "rol": input("¿Qué rol tiene en la oficina?: ").strip(),
-        "genero": input("¿Es hombre o mujer?: ").strip(),
-        "aspecto": input("Menciona algunos rasgos físicos (separa con comas): ").split(","),
-        "personalidad": input("Describe su personalidad (separa con comas): ").split(","),
-        "narrativa": input("¿Es personaje principal o secundario?: ").strip(),
-        "estilo": input("¿Cómo suele vestir?: ").split(","),
-        "distintivo": input("¿Algún rasgo distintivo o hábito?: ").split(",")
-    }
+        # --- ZONA DE RESULTADOS ---
+        self.image_label = tk.Label(self.main_frame, bg="#1c3d5a")
+        self.image_label.pack(pady=25)
+        self.result_label = tk.Label(self.main_frame, text="", fg="white", bg="#1c3d5a", font=("Arial", 16))
+        self.result_label.pack()
 
-    # Limpieza de listas
-    for key in ["aspecto", "personalidad", "estilo", "distintivo"]:
-        nuevo[key] = [x.strip() for x in nuevo[key] if x.strip()]
+        # --- BOTÓN DE REINICIO ---
+        self.restart_btn = tk.Button(
+            self.main_frame,
+            text="Jugar de nuevo",
+            width=18,
+            bg="#4682b4",
+            fg="white",
+            font=("Arial", 13, "bold"),
+            command=self.reset_game
+        )
+        self.restart_btn.pack(pady=15)
+        self.restart_btn.pack_forget()
 
-    characters.append(nuevo)
-    save_knowledge(characters)
-    print(f"✅ ¡He aprendido sobre {nombre}! La próxima vez intentaré adivinarlo mejor.")
-    return characters
+        # --- Motor ---
+        self.characters = load_knowledge()
+        self.reset_game()
 
+    # ==============================
+    # ESTADOS DE LOS BOTONES
+    # ==============================
+    def set_buttons_to_answer_mode(self):
+        self.ui_mode = "asking"
+        self.yes_btn.config(text="Sí", bg="#2e8b57", command=lambda: self.answer("s"))
+        self.no_btn.config(text="No", bg="#b22222", command=lambda: self.answer("n"))
+        self.yes_btn.config(state="normal")
+        self.no_btn.config(state="normal")
 
-# ==============================
-# MOTOR PRINCIPAL
-# ==============================
-def main():
-    print("🧠 Bienvenido al juego de The Office (modo experto)\n")
+    def set_buttons_to_confirm_mode(self):
+        self.ui_mode = "confirm"
+        self.yes_btn.config(text="Correcto", bg="#2e8b57", command=self.confirm_yes)
+        self.no_btn.config(text="Incorrecto", bg="#b22222", command=self.confirm_no)
+        self.yes_btn.config(state="normal")
+        self.no_btn.config(state="normal")
 
-    while True:
-        characters = load_knowledge()
-        if not characters:
-            print("No hay datos cargados. Agrega personajes antes de jugar.")
+    # ==============================
+    # LÓGICA PRINCIPAL
+    # ==============================
+    def reset_game(self):
+        self.remaining_chars = self.characters.copy()
+        self.asked_features = set()
+        self.asked_count = 0
+        self.category_index = 0
+        self.image_label.config(image="", text="")
+        self.result_label.config(text="")
+        self.restart_btn.pack_forget()
+        self.question_label.config(text="Piensa en un personaje de The Office 😏")
+        self.set_buttons_to_answer_mode()
+        self.next_question()
+
+    def next_question(self):
+        if not self.remaining_chars:
+            self.show_message("No estoy seguro de quién podría ser 😔")
+            self.show_restart_button()
             return
 
-        remaining_chars = characters.copy()
-        asked_features = set()
-        asked_count = 0
-        category_index = 0
+        if (self.asked_count >= MIN_QUESTIONS and len(self.remaining_chars) == 1):
+            self.guess_character(self.remaining_chars[0])
+            return
 
-        # 🔸 Mínimo 5 preguntas, pero sigue si hay más de 1 candidato
-        while (asked_count < MIN_QUESTIONS or len(remaining_chars) > 1) and remaining_chars:
-            category = CATEGORY_ORDER[category_index % len(CATEGORY_ORDER)]
-            remaining_chars, asked_features = ask_question(category, remaining_chars, asked_features)
-            asked_count += 1
-            category_index += 1
+        category = CATEGORY_ORDER[self.category_index % len(CATEGORY_ORDER)]
+        opciones = []
+        for char in self.remaining_chars:
+            value = char.get(category)
+            if isinstance(value, list):
+                for v in value:
+                    if v not in self.asked_features:
+                        opciones.append(v)
+            elif isinstance(value, str):
+                if value not in self.asked_features:
+                    opciones.append(value)
 
-            # Si ya no hay personajes posibles
-            if not remaining_chars:
-                break
+        if not opciones:
+            self.category_index += 1
+            self.next_question()
+            return
 
-        # 🔸 Intentar adivinar
-        if not remaining_chars:
-            print("\nNo estoy seguro de quién podría ser 😔.")
-            resp = input("¿Quieres enseñarme quién era? (s/n): ").lower()
-            if resp == "s":
-                characters = learn_new_character(characters)
-        elif len(remaining_chars) == 1:
-            personaje = remaining_chars[0]["nombre"]
-            print(f"\nCreo que estás pensando en... 🕵️‍♂️ {personaje}")
-            correcto = input("¿Adiviné correctamente? (s/n): ").lower()
-            if correcto != "s":
-                characters = learn_new_character(characters)
-            else:
-                print("😎 ¡Sabía que lo adivinaría!")
+        self.feature = random.choice(opciones)
+        pregunta = f"¿El {category} es '{self.feature}'?"
+        self.question_label.config(text=pregunta)
+        self.category_index += 1
+        self.asked_count += 1
+        self.set_buttons_to_answer_mode()
+
+    def answer(self, ans):
+        if self.ui_mode != "asking":
+            return
+
+        category = CATEGORY_ORDER[(self.category_index - 1) % len(CATEGORY_ORDER)]
+        if ans == "s":
+            self.remaining_chars = [
+                c for c in self.remaining_chars
+                if (self.feature in c.get(category, [])) or (self.feature == c.get(category))
+            ]
         else:
-            print("\nTengo varias opciones en mente:")
-            for c in remaining_chars:
-                print(f" - {c['nombre']}")
-            correcto = input("\n¿Está tu personaje en la lista? (s/n): ").lower()
-            if correcto != "s":
-                characters = learn_new_character(characters)
+            self.remaining_chars = [
+                c for c in self.remaining_chars
+                if not ((self.feature in c.get(category, [])) or (self.feature == c.get(category)))
+            ]
+        self.asked_features.add(self.feature)
+        self.next_question()
 
-        # 🔁 Preguntar si desea jugar de nuevo
-        again = input("\n¿Quieres jugar otra vez? (s/n): ").strip().lower()
-        if again != "s":
-            print("\n👋 ¡Gracias por jugar! ¡Vuelve pronto a Dunder Mifflin!")
-            break
+    def guess_character(self, character):
+        name = character["nombre"]
+        self.question_label.config(text=f"Creo que estás pensando en...")
+        self.show_image(name)
+        self.result_label.config(text=f"🕵️‍♂️ {name}")
+        self.set_buttons_to_confirm_mode()
+
+    # ==============================
+    # CONFIRMACIÓN
+    # ==============================
+    def confirm_yes(self):
+        self.question_label.config(text="¡Genial! Sabía que lo adivinaría 😏")
+        self.yes_btn.config(state="disabled")
+        self.no_btn.config(state="disabled")
+        self.show_restart_button()  # ✅ ahora aparece el botón Jugar de nuevo
+
+    def confirm_no(self):
+        self.question_label.config(text="Vaya — no lo adiviné. Puedes enseñarme abriendo la consola.")
+        self.yes_btn.config(state="disabled")
+        self.no_btn.config(state="disabled")
+        self.show_restart_button()
+
+    # ==============================
+    # UI AUXILIARES
+    # ==============================
+    def show_image(self, name):
+        img_path_jpg = os.path.join("images", f"{name}.jpg")
+        img_path_png = os.path.join("images", f"{name}.png")
+        img_path = img_path_jpg if os.path.exists(img_path_jpg) else (img_path_png if os.path.exists(img_path_png) else None)
+
+        if img_path:
+            img = Image.open(img_path).resize((250, 320))
+            self.char_img = ImageTk.PhotoImage(img)
+            self.image_label.config(image=self.char_img, text="")
         else:
-            print("\n🔄 Reiniciando el juego...\n")
+            self.image_label.config(image="", text="(Imagen no disponible)", fg="white")
+
+    def show_message(self, text):
+        self.question_label.config(text=text)
+        self.image_label.config(image="", text="")
+        self.result_label.config(text="")
+
+    def show_restart_button(self):
+        """Muestra el botón de jugar de nuevo."""
+        self.restart_btn.pack(pady=15)
+        self.restart_btn.lift()
 
 # ==============================
 # EJECUCIÓN
 # ==============================
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    app = TheOfficeUI(root)
+    root.mainloop()
