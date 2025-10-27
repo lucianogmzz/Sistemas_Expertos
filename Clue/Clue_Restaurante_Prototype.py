@@ -35,7 +35,7 @@ import sys
 pygame.init()
 WIDTH, HEIGHT = 1000, 700
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Clue: El platillo del día')
+pygame.display.set_caption('Clue: ¿Quién arruinó el platillo?')
 FONT = pygame.font.SysFont('arial', 20)
 TITLE_FONT = pygame.font.SysFont('arial', 36, bold=True)
 CLOCK = pygame.time.Clock()
@@ -252,7 +252,7 @@ def screen_title():
     SCREEN.fill((250, 245, 240))
     
     # Título del juego
-    title = TITLE_FONT.render('Clue: Quién arruinó el platillo', True, (60,20,20))
+    title = TITLE_FONT.render('Clue: ¿Quién arruinó el platillo?', True, (60,20,20))
     SCREEN.blit(title, (WIDTH//2 - title.get_width()//2, 40))
     
     # Subtítulo
@@ -261,7 +261,7 @@ def screen_title():
     
     # Relato introductorio
     intro_text = (
-        "Es una noche caótica en el restaurante 'El Sabor de Camila', donde la famosa chef Camila dirige "
+        "Es una noche caótica en el restaurante 'Rosée', donde la famosa chef Camila dirige "
         "su brigada de cocina con mano firme. Hoy, el crítico gastronómico más importante del país hará su visita, "
         "y cada plato cuenta. Entre pedidos desbordados, ingredientes fuera de lugar y utensilios por el aire, "
         "la cocina se ha convertido en un campo de batalla. Los empleados luchan por reconocimiento, "

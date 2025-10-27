@@ -74,6 +74,16 @@ class TheOfficeUI:
             bg="#1c3d5a"
         )
         self.title_label.pack(pady=(16, 8))
+        
+        # --- SUBTÍTULO CONTEXTUAL ---
+        self.subtitle_label = tk.Label(
+            self.main_frame,
+            text="Piensa en un personaje de The Office… ¿lo tienes? ¡Lo adivinaré!",
+            font=("Arial", 16, "italic"),
+            fg="#dcdcdc",
+            bg="#1c3d5a"
+        )
+        self.subtitle_label.pack(pady=(0, 20))
 
         # Texto de pregunta centrado
         self.question_label = tk.Label(
